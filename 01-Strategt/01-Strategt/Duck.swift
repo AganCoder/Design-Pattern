@@ -7,18 +7,22 @@
 
 import Foundation
 
-class Duck {
+protocol DuckRepresentable {
+    func quack()
+    func swim()
+    func display()
+}
+
+extension DuckRepresentable {
     func quack() { debugPrint("嘎嘎") }
-    
     func swim() { debugPrint("游泳") }
-    
-    func display() { fatalError(" subclass implement ") }
 }
 
-class MallarDuck: Duck {
-    override func display() { debugPrint( "Mallar Duck display" ) }
+
+class MallarDuck: DuckRepresentable {
+    func display() { debugPrint( "Mallar Duck display" ) }
 }
 
-class RedHeadDuck: Duck {
-    override func display() { debugPrint( "Red Head Duck display" ) }
+class RedHeadDuck: DuckRepresentable {
+    func display() { debugPrint( "Red Head Duck display" ) }
 }
