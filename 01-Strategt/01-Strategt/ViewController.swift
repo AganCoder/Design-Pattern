@@ -16,13 +16,21 @@ class ViewController: UIViewController {
         mallar.quack()
         mallar.swim()
         mallar.display()
+        mallar.fly()
         
         let redHead = RedHeadDuck()
         redHead.quack()
         redHead.swim()
         redHead.display()
+        redHead.fly()
+        
+        
+        let rubber = RubberDuck()
+        rubber.quack()
+        rubber.swim()
+        rubber.display()
+        rubber.fly()
+        
     }
-
-
 }
 
