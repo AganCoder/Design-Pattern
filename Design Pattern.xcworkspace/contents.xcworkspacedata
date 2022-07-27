@@ -4,4 +4,7 @@
    <FileRef
       location = "group:01-Strategt/01-Strategt.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:02-Observer/02-Observer.xcodeproj">
+   </FileRef>
 </Workspace>
