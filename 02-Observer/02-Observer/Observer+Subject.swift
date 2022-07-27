@@ -31,17 +31,24 @@ class WeatherData: Subject  {
         }
     }
     
+    public var changed: Bool = true
+    
     func notifyObserver() {
         self.observers.forEach { $0.update(s: self) }
+    }
+    
+    func measureMentsChanged() {
+        if changed {
+            notifyObserver()
+            changed = false
+        }
     }
     
     public private(set) var temperature: Double = 0.0
     public private(set) var humidity: Double = 0.0
     public private(set) var pressure: Double = 0.0
     
-    func measureMentsChanged() {
-        notifyObserver()
-    }
+    
     
     func setMeasureChanged(temperature: Double, humidity: Double, pressure: Double) {
         self.temperature = temperature
