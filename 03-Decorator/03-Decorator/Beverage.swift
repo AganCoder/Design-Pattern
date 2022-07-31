@@ -28,6 +28,10 @@ class Mocha: CondimentDecorator {
     func cost() -> Double {
         return 1.0 + self.beverage.cost()
     }
+    
+    func gift() -> String {
+        return "杯具"
+    }
 }
 
 class Whip: CondimentDecorator {
