@@ -7,6 +7,45 @@
 
 import Foundation
 
+/// 面团
+protocol Dough {}
+
+/// 酱汁
+protocol Sauce {}
+
+class NYDough: Dough { }
+class NYSauce: Sauce { }
+
+class ChicagoDough: Dough { }
+class ChicagoSauce: Sauce { }
+
+/// 原料工厂
+protocol PizzaIngredientFactory {
+    func makeDough() -> Dough
+    func makeSauce() -> Sauce
+}
+
+class NYPizzaIngredientFactory: PizzaIngredientFactory {
+    func makeDough() -> Dough {
+        return NYDough()
+    }
+    
+    func makeSauce() -> Sauce {
+        return NYSauce()
+    }
+}
+
+class ChicagoPizzaIngredientFactory: PizzaIngredientFactory {
+    func makeDough() -> Dough {
+        return ChicagoDough()
+    }
+    
+    func makeSauce() -> Sauce {
+        return ChicagoSauce()
+    }
+}
+
+
 protocol Pizza {
     func prepare()
     func bake()
@@ -34,13 +73,16 @@ class SimplePizzaFactory: PizzaFactory {
 
 /// New York 披萨工厂方法，创建 New York 风味的 Pizza
 class NYPizzaFactory: PizzaFactory {
+    
+    let pizzaIngredientFactory = NYPizzaIngredientFactory()
+    
     func createPizza(type: String) -> Pizza? {
         var pizza: Pizza? = nil
         
         if type == "cheese" {
-            pizza = NYCheesePizza()
+            pizza = NYCheesePizza(ingredientFactory: self.pizzaIngredientFactory)
         } else if type == "Greek" {
-            pizza = NYGreekPizza()
+            pizza = NYGreekPizza(ingredientFactory: self.pizzaIngredientFactory)
         }
         
         return pizza
@@ -49,13 +91,14 @@ class NYPizzaFactory: PizzaFactory {
 
 /// Chicago 披萨工厂方法，创建 Chicago 风味的 Pizza
 class ChicagoPizzaFactory: PizzaFactory {
+    let pizzaIngredientFactory = ChicagoPizzaIngredientFactory()
     func createPizza(type: String) -> Pizza? {
         var pizza: Pizza? = nil
         
         if type == "cheese" {
-            pizza = ChicagoCheesePizza()
+            pizza = ChicagoCheesePizza(ingredientFactory: self.pizzaIngredientFactory)
         } else if type == "Greek" {
-            pizza = ChicagoGreekPizza()
+            pizza = ChicagoGreekPizza(ingredientFactory: self.pizzaIngredientFactory)
         }
         
         return pizza
@@ -96,28 +139,71 @@ class GreekPizza: Pizza {
 
 
 class NYCheesePizza: Pizza {
-    func prepare() { debugPrint("NYCheese Prepare") }
+    
+    let ingredientFactory: PizzaIngredientFactory
+    init(ingredientFactory: PizzaIngredientFactory) {
+        self.ingredientFactory = ingredientFactory
+    }
+    
+    func prepare() {
+        debugPrint(" NYCheese Prepare ")
+        debugPrint("using douch: \(self.ingredientFactory.makeDough())" )
+        debugPrint("using Sauch: \(self.ingredientFactory.makeSauce())" )
+        
+    }
     func bake() { debugPrint("NYCheese Bake") }
     func cut() { debugPrint("NYCheese Cut") }
     func box() { debugPrint("NYCheese Box") }
 }
 
 class NYGreekPizza: Pizza {
-    func prepare() { debugPrint("NYGreek Prepare") }
+    let ingredientFactory: PizzaIngredientFactory
+    init(ingredientFactory: PizzaIngredientFactory) {
+        self.ingredientFactory = ingredientFactory
+    }
+    
+    func prepare() {
+        debugPrint(" NYGreek Prepare ")
+        debugPrint("using douch: \(self.ingredientFactory.makeDough())" )
+        debugPrint("using Sauch: \(self.ingredientFactory.makeSauce())" )
+        
+    }
+
     func bake() { debugPrint("NYGreek Bake") }
     func cut() { debugPrint("NYGreek Cut") }
     func box() { debugPrint("NYGreek Box") }
 }
 
 class ChicagoCheesePizza: Pizza {
-    func prepare() { debugPrint("ChicagoCheese Prepare") }
+    let ingredientFactory: PizzaIngredientFactory
+    init(ingredientFactory: PizzaIngredientFactory) {
+        self.ingredientFactory = ingredientFactory
+    }
+    
+    func prepare() {
+        debugPrint(" ChicagoCheese Prepare ")
+        debugPrint("using douch: \(self.ingredientFactory.makeDough())" )
+        debugPrint("using Sauch: \(self.ingredientFactory.makeSauce())" )
+        
+    }
+    
     func bake() { debugPrint("ChicagoCheese Bake") }
     func cut() { debugPrint("ChicagoCheese Cut") }
     func box() { debugPrint("ChicagoCheese Box") }
 }
 
 class ChicagoGreekPizza: Pizza {
-    func prepare() { debugPrint("ChicagoGreek Prepare") }
+    let ingredientFactory: PizzaIngredientFactory
+    init(ingredientFactory: PizzaIngredientFactory) {
+        self.ingredientFactory = ingredientFactory
+    }
+    
+    func prepare() {
+        debugPrint(" ChicagoGreek Prepare ")
+        debugPrint("using douch: \(self.ingredientFactory.makeDough())" )
+        debugPrint("using Sauch: \(self.ingredientFactory.makeSauce())" )
+        
+    }
     func bake() { debugPrint("ChicagoGreek Bake") }
     func cut() { debugPrint("ChicagoGreek Cut") }
     func box() { debugPrint("ChicagoGreek Box") }
