@@ -13,6 +13,7 @@
 		8F94140A2896115E0058EC5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F9414092896115E0058EC5F /* Assets.xcassets */; };
 		8F94140D2896115E0058EC5F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F94140B2896115E0058EC5F /* LaunchScreen.storyboard */; };
 		8F941415289611F90058EC5F /* PizzaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F941414289611F90058EC5F /* PizzaStore.swift */; };
+		8F9414172896E9D30058EC5F /* Furniture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9414162896E9D30058EC5F /* Furniture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		8F94140C2896115E0058EC5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F94140E2896115E0058EC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F941414289611F90058EC5F /* PizzaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PizzaStore.swift; sourceTree = "<group>"; };
+		8F9414162896E9D30058EC5F /* Furniture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Furniture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				8F9414002896115C0058EC5F /* AppDelegate.swift */,
 				8F9414042896115C0058EC5F /* ViewController.swift */,
 				8F941414289611F90058EC5F /* PizzaStore.swift */,
+				8F9414162896E9D30058EC5F /* Furniture.swift */,
 				8F9414062896115C0058EC5F /* Main.storyboard */,
 				8F9414092896115E0058EC5F /* Assets.xcassets */,
 				8F94140B2896115E0058EC5F /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 			files = (
 				8F941415289611F90058EC5F /* PizzaStore.swift in Sources */,
 				8F9414052896115C0058EC5F /* ViewController.swift in Sources */,
+				8F9414172896E9D30058EC5F /* Furniture.swift in Sources */,
 				8F9414012896115C0058EC5F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
