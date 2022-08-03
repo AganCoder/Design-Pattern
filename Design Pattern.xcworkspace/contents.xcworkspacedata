@@ -13,4 +13,7 @@
    <FileRef
       location = "group:04-Factory/04-Factory.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:06-Command/06-Command.xcodeproj">
+   </FileRef>
 </Workspace>
