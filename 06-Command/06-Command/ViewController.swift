@@ -11,9 +11,21 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+              
+        /// Receiver
+        let light = Light()
         
-        let customer = Customer()
-        customer.createOrder()
+        /// Command
+        let lightOnCommand = LightOnCommand(light: light)
+        
+        /// Invoker
+        let simpleRemoteControl = SimpleRemoteControl()
+        
+        /// 讲 Invoker 与 Command 关联起来
+        simpleRemoteControl.setCommand(command: lightOnCommand)
+        
+        /// Invoker触发事件
+        simpleRemoteControl.buttonWasPressed()
     }
 
 

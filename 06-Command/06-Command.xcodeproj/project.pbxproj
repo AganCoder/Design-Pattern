@@ -7,15 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F63F9F4289ACD1D004D9E85 /* RemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F63F9F3289ACD1D004D9E85 /* RemoteControl.swift */; };
 		8F94145D2898191A0058EC5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F94145C2898191A0058EC5F /* AppDelegate.swift */; };
 		8F9414612898191A0058EC5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9414602898191A0058EC5F /* ViewController.swift */; };
 		8F9414642898191A0058EC5F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F9414622898191A0058EC5F /* Main.storyboard */; };
 		8F9414662898191E0058EC5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F9414652898191E0058EC5F /* Assets.xcassets */; };
 		8F9414692898191E0058EC5F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F9414672898191E0058EC5F /* LaunchScreen.storyboard */; };
-		8F941471289819460058EC5F /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F941470289819460058EC5F /* Command.swift */; };
+		8F941471289819460058EC5F /* Resturant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F941470289819460058EC5F /* Resturant.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8F63F9F3289ACD1D004D9E85 /* RemoteControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteControl.swift; sourceTree = "<group>"; };
 		8F9414592898191A0058EC5F /* 06-Command.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "06-Command.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F94145C2898191A0058EC5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F9414602898191A0058EC5F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -23,7 +25,7 @@
 		8F9414652898191E0058EC5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F9414682898191E0058EC5F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F94146A2898191E0058EC5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8F941470289819460058EC5F /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		8F941470289819460058EC5F /* Resturant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resturant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +60,8 @@
 			children = (
 				8F94145C2898191A0058EC5F /* AppDelegate.swift */,
 				8F9414602898191A0058EC5F /* ViewController.swift */,
-				8F941470289819460058EC5F /* Command.swift */,
+				8F941470289819460058EC5F /* Resturant.swift */,
+				8F63F9F3289ACD1D004D9E85 /* RemoteControl.swift */,
 				8F9414622898191A0058EC5F /* Main.storyboard */,
 				8F9414652898191E0058EC5F /* Assets.xcassets */,
 				8F9414672898191E0058EC5F /* LaunchScreen.storyboard */,
@@ -139,8 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F9414612898191A0058EC5F /* ViewController.swift in Sources */,
+				8F63F9F4289ACD1D004D9E85 /* RemoteControl.swift in Sources */,
 				8F94145D2898191A0058EC5F /* AppDelegate.swift in Sources */,
-				8F941471289819460058EC5F /* Command.swift in Sources */,
+				8F941471289819460058EC5F /* Resturant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
