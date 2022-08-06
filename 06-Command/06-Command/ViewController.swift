@@ -12,20 +12,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
               
-        /// Receiver
         let light = Light()
-        
-        /// Command
         let lightOnCommand = LightOnCommand(light: light)
-        
-        /// Invoker
+        let lightOffCommand = LightOffCommand(light: light)
+                
         let simpleRemoteControl = SimpleRemoteControl()
+        simpleRemoteControl.setCommand(slot: 1, onCommand: lightOnCommand, offCommand: lightOffCommand)
         
-        /// 讲 Invoker 与 Command 关联起来
-        simpleRemoteControl.setCommand(command: lightOnCommand)
-        
-        /// Invoker触发事件
-        simpleRemoteControl.buttonWasPressed()
+        debugPrint(simpleRemoteControl.onCommands)
+        debugPrint(simpleRemoteControl.offCommands)
     }
 
 

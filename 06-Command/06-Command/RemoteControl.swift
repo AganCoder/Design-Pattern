@@ -63,17 +63,26 @@ class LightOffCommand: Command {
     func excute() { self.light.off()  }
 }
 
+class NoCommand: Command {
+    func excute() { }
+}
+
 
 class SimpleRemoteControl {
-    var slot: Command?
     
-    init() {}
+    var onCommands: [Command] = Array(repeating: NoCommand(), count: 7)
+    var offCommands: [Command] = Array(repeating: NoCommand(), count: 7)
     
-    func setCommand(command: Command) {
-        self.slot = command
+    func setCommand(slot: Int, onCommand: Command, offCommand: Command) {
+        self.onCommands[slot] = onCommand
+        self.offCommands[slot] = offCommand
     }
     
-    func buttonWasPressed() {
-        self.slot?.excute()
+    func onButtonWasPressed(at slot: Int) {
+        self.onCommands[slot].excute()
+    }
+    
+    func offButtonWasPressed(at slot: Int) {
+        self.offCommands[slot].excute()
     }
 }
