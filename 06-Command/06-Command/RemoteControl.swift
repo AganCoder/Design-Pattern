@@ -7,23 +7,16 @@
 
 import Foundation
 
-class OutdoorLight {
-    func on() { debugPrint( "OutdoorLight on") }
-    func off() { debugPrint( "OutdoorLight off") }
+protocol SlotDevice {
+    func on()
+    func off()
 }
 
-class CeilingLight {
-    func on() { debugPrint( "CeilingLight on") }
-    func off() { debugPrint( "CeilingLight off") }
-    func dim() { debugPrint( "CeilingLight dim") }
+class Light: SlotDevice {
+    func on() { debugPrint( "Light on") }
+    func off() { debugPrint( "Light off") }
 }
 
-class GardenLight {
-    func setDuskTime() { debugPrint( "GardenLight setDuskTime") }
-    func setDawnTime() { debugPrint( "GardenLight setDawnTime") }
-    func manualOn() { debugPrint( "GardenLight manualOn") }
-    func manualOff() { debugPrint( "GardenLight manualOff") }
-}
 
 class CeilingFan {
     enum Speed {
@@ -33,182 +26,55 @@ class CeilingFan {
         case low
     }
     
-    var speed: Speed = .off
+    var speed: Speed = .off {
+        didSet {
+            debugPrint("set speed to \(self.speed)")
+        }
+    }
 }
 
-class Sprinkler {
-    func waterOn() { debugPrint( "Sprinkler waterOn") }
-    func waterOff() { debugPrint( "Sprinkler  waterOff") }
-}
-
-class Light {
-    func on() { debugPrint( "Light on") }
-    func off() { debugPrint( "Light off") }
-}
-
-protocol Command {
-    func excute()
-    func undo()
-}
-
-class LightOnCommand: Command {
-    let light: Light
+class CeilingFanAdapter: SlotDevice {
     
-    init(light: Light) { self.light = light }
-    
-    func excute() { self.light.on()  }
-    
-    func undo() { self.light.on() }
-}
-
-class LightOffCommand: Command {
-    let light: Light
-    
-    init(light: Light) { self.light = light }
-    
-    func excute() { self.light.off()  }
-    
-    func undo() { self.light.on() }
-}
-
-class CeilingFanHighCommand: Command {
     let ceilingFan: CeilingFan
+    let onSpeed: CeilingFan.Speed
+    let offSpeed: CeilingFan.Speed
     
-    var previewSpeed: CeilingFan.Speed = .off
-    
-    init(ceilingFan: CeilingFan) {
+    init(ceilingFan: CeilingFan, onSpeed: CeilingFan.Speed, offSpeed: CeilingFan.Speed = .off) {
         self.ceilingFan = ceilingFan
+        self.onSpeed = onSpeed
+        self.offSpeed = offSpeed
     }
     
-    func excute() {
-        self.previewSpeed = self.ceilingFan.speed
-        
-        self.ceilingFan.speed = .high
-        
-        debugPrint( "CeilingFanHighCommand, preview speed is \(self.previewSpeed)" )
+    func on() {
+        self.ceilingFan.speed = self.onSpeed
     }
     
-    func undo() {
-        let speed = self.ceilingFan.speed
-        self.ceilingFan.speed = previewSpeed
-        self.previewSpeed = speed
-    
-        debugPrint( "CeilingFanHighCommand, undo to \(self.previewSpeed)" )
+    func off() {
+        self.ceilingFan.speed = self.offSpeed
     }
 }
 
-class CeilingFanMediumCommand: Command {
-    let ceilingFan: CeilingFan
-    
-    var previewSpeed: CeilingFan.Speed = .off
-    
-    init(ceilingFan: CeilingFan) {
-        self.ceilingFan = ceilingFan
-    }
-    
-    func excute() {
-        self.previewSpeed = self.ceilingFan.speed
-        
-        self.ceilingFan.speed = .medium
-        
-        debugPrint( "CeilingFanMediumCommand, preview speed is \(self.previewSpeed)" )
-    }
-    
-    func undo() {
-        let speed = self.ceilingFan.speed
-        self.ceilingFan.speed = previewSpeed
-        self.previewSpeed = speed
-        
-        debugPrint( "CeilingFanHighCommand, undo to \(self.ceilingFan.speed)" )
-    }
-}
-
-class CeilingFanOffCommand: Command {
-    let ceilingFan: CeilingFan
-    
-    var previewSpeed: CeilingFan.Speed = .off
-    
-    init(ceilingFan: CeilingFan) {
-        self.ceilingFan = ceilingFan
-    }
-    
-    func excute() {
-        self.previewSpeed = self.ceilingFan.speed
-        
-        self.ceilingFan.speed = .off
-        
-        debugPrint( "CeilingFanOffCommand, preview speed is \(self.previewSpeed)" )
-    }
-    
-    func undo() {
-        let speed = self.ceilingFan.speed
-        self.ceilingFan.speed = previewSpeed
-        self.previewSpeed = speed
-        
-        debugPrint( "CeilingFanOffCommand, undo to \(self.ceilingFan.speed)" )
-    }
-}
-
-class CeilingFanLowCommand: Command {
-    let ceilingFan: CeilingFan
-    
-    var previewSpeed: CeilingFan.Speed = .off
-    
-    init(ceilingFan: CeilingFan) {
-        self.ceilingFan = ceilingFan
-    }
-    
-    func excute() {
-        self.previewSpeed = self.ceilingFan.speed
-        
-        self.ceilingFan.speed = .low
-        
-        debugPrint( "CeilingFanLowCommand, preview speed is \(self.previewSpeed)" )
-    }
-    
-    func undo() {
-        let speed = self.ceilingFan.speed
-        self.ceilingFan.speed = previewSpeed
-        self.previewSpeed = speed
-        
-        debugPrint( "CeilingFanLowCommand, undo to \(self.ceilingFan.speed)" )
-    }
-}
-
-class NoCommand: Command {
-    func excute() { }
-    func undo() { }
-}
 
 
 class SimpleRemoteControl {
     
-    var onCommands: [Command] = Array(repeating: NoCommand(), count: 7)
-    var offCommands: [Command] = Array(repeating: NoCommand(), count: 7)
-    var undoCommands: [Command] = Array(repeating: NoCommand(), count: 7)
-    
-    func setCommand(slot: Int, onCommand: Command, offCommand: Command) {
-        self.onCommands[slot] = onCommand
-        self.offCommands[slot] = offCommand
+    var slots: [SlotDevice?] = Array(repeating: nil, count: 7)
+
+    func setDevice(slot: Int, device: SlotDevice) {
+        self.slots[slot] = device
     }
-    
+
     func onButtonWasPressed(at slot: Int) {
-        self.onCommands[slot].excute()
-        
-        /// 记住当前执行的操作，undo 后就是当前的
-        self.undoCommands[slot] = self.onCommands[slot]
+        self.slots[slot]?.on()
     }
-    
+
     func offButtonWasPressed(at slot: Int) {
-        self.offCommands[slot].excute()
-        
-        /// 记住当前执行的操作，undo 后就是当前的
-        self.undoCommands[slot] = self.offCommands[slot]
+        self.slots[slot]?.off()
     }
-    
-    func undoButtonWasPressed() {
-        for command in self.undoCommands {
-            command.undo()
-        }
-    }
+//
+//    func undoButtonWasPressed() {
+//        for command in self.undoCommands {
+//            command.undo()
+//        }
+//    }
 }
