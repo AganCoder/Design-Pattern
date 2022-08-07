@@ -26,11 +26,14 @@ class GardenLight {
 }
 
 class CeilingFan {
-    func high() { debugPrint( "CeilingFan high") }
-    func medium() { debugPrint( "CeilingFan medium") }
-    func low() { debugPrint( "CeilingFan low") }
-    func off() { debugPrint( "CeilingFan off") }
-    func getSpeed() { debugPrint( "CeilingFan getSpeed") }
+    enum Speed {
+        case off
+        case high
+        case medium
+        case low
+    }
+    
+    var speed: Speed = .off
 }
 
 class Sprinkler {
@@ -45,6 +48,7 @@ class Light {
 
 protocol Command {
     func excute()
+    func undo()
 }
 
 class LightOnCommand: Command {
@@ -53,6 +57,8 @@ class LightOnCommand: Command {
     init(light: Light) { self.light = light }
     
     func excute() { self.light.on()  }
+    
+    func undo() { self.light.on() }
 }
 
 class LightOffCommand: Command {
@@ -61,10 +67,117 @@ class LightOffCommand: Command {
     init(light: Light) { self.light = light }
     
     func excute() { self.light.off()  }
+    
+    func undo() { self.light.on() }
+}
+
+class CeilingFanHighCommand: Command {
+    let ceilingFan: CeilingFan
+    
+    var previewSpeed: CeilingFan.Speed = .off
+    
+    init(ceilingFan: CeilingFan) {
+        self.ceilingFan = ceilingFan
+    }
+    
+    func excute() {
+        self.previewSpeed = self.ceilingFan.speed
+        
+        self.ceilingFan.speed = .high
+        
+        debugPrint( "CeilingFanHighCommand, preview speed is \(self.previewSpeed)" )
+    }
+    
+    func undo() {
+        let speed = self.ceilingFan.speed
+        self.ceilingFan.speed = previewSpeed
+        self.previewSpeed = speed
+    
+        debugPrint( "CeilingFanHighCommand, undo to \(self.previewSpeed)" )
+    }
+}
+
+class CeilingFanMediumCommand: Command {
+    let ceilingFan: CeilingFan
+    
+    var previewSpeed: CeilingFan.Speed = .off
+    
+    init(ceilingFan: CeilingFan) {
+        self.ceilingFan = ceilingFan
+    }
+    
+    func excute() {
+        self.previewSpeed = self.ceilingFan.speed
+        
+        self.ceilingFan.speed = .medium
+        
+        debugPrint( "CeilingFanMediumCommand, preview speed is \(self.previewSpeed)" )
+    }
+    
+    func undo() {
+        let speed = self.ceilingFan.speed
+        self.ceilingFan.speed = previewSpeed
+        self.previewSpeed = speed
+        
+        debugPrint( "CeilingFanHighCommand, undo to \(self.ceilingFan.speed)" )
+    }
+}
+
+class CeilingFanOffCommand: Command {
+    let ceilingFan: CeilingFan
+    
+    var previewSpeed: CeilingFan.Speed = .off
+    
+    init(ceilingFan: CeilingFan) {
+        self.ceilingFan = ceilingFan
+    }
+    
+    func excute() {
+        self.previewSpeed = self.ceilingFan.speed
+        
+        self.ceilingFan.speed = .off
+        
+        debugPrint( "CeilingFanOffCommand, preview speed is \(self.previewSpeed)" )
+    }
+    
+    func undo() {
+        let speed = self.ceilingFan.speed
+        self.ceilingFan.speed = previewSpeed
+        self.previewSpeed = speed
+        
+        debugPrint( "CeilingFanOffCommand, undo to \(self.ceilingFan.speed)" )
+    }
+}
+
+class CeilingFanLowCommand: Command {
+    let ceilingFan: CeilingFan
+    
+    var previewSpeed: CeilingFan.Speed = .off
+    
+    init(ceilingFan: CeilingFan) {
+        self.ceilingFan = ceilingFan
+    }
+    
+    func excute() {
+        self.previewSpeed = self.ceilingFan.speed
+        
+        self.ceilingFan.speed = .low
+        
+        debugPrint( "CeilingFanLowCommand, preview speed is \(self.previewSpeed)" )
+    }
+    
+    func undo() {
+        let speed = self.ceilingFan.speed
+        self.ceilingFan.speed = previewSpeed
+        self.previewSpeed = speed
+        
+        debugPrint( "CeilingFanLowCommand, undo to \(self.ceilingFan.speed)" )
+    }
 }
 
 class NoCommand: Command {
     func excute() { }
+    func undo() { }
 }
 
 
@@ -72,8 +185,7 @@ class SimpleRemoteControl {
     
     var onCommands: [Command] = Array(repeating: NoCommand(), count: 7)
     var offCommands: [Command] = Array(repeating: NoCommand(), count: 7)
-    
-    var undoCommand: Command?
+    var undoCommands: [Command] = Array(repeating: NoCommand(), count: 7)
     
     func setCommand(slot: Int, onCommand: Command, offCommand: Command) {
         self.onCommands[slot] = onCommand
@@ -83,18 +195,20 @@ class SimpleRemoteControl {
     func onButtonWasPressed(at slot: Int) {
         self.onCommands[slot].excute()
         
-        /// On 记下 Off 状态
-        self.undoCommand = self.offCommands[slot]
+        /// 记住当前执行的操作，undo 后就是当前的
+        self.undoCommands[slot] = self.onCommands[slot]
     }
     
     func offButtonWasPressed(at slot: Int) {
         self.offCommands[slot].excute()
         
-        /// Off 记下 On 状态
-        self.undoCommand = self.onCommands[slot]
+        /// 记住当前执行的操作，undo 后就是当前的
+        self.undoCommands[slot] = self.offCommands[slot]
     }
     
     func undoButtonWasPressed() {
-        self.undoCommand?.excute()
+        for command in self.undoCommands {
+            command.undo()
+        }
     }
 }
