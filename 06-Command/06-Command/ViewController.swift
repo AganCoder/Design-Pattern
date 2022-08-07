@@ -19,8 +19,13 @@ class ViewController: UIViewController {
         let simpleRemoteControl = SimpleRemoteControl()
         simpleRemoteControl.setCommand(slot: 1, onCommand: lightOnCommand, offCommand: lightOffCommand)
         
-        debugPrint(simpleRemoteControl.onCommands)
-        debugPrint(simpleRemoteControl.offCommands)
+        
+        simpleRemoteControl.onButtonWasPressed(at: 1)
+        simpleRemoteControl.undoButtonWasPressed()
+        
+        simpleRemoteControl.offButtonWasPressed(at: 1)
+        simpleRemoteControl.undoButtonWasPressed()
+        simpleRemoteControl.undoButtonWasPressed()
     }
 
 

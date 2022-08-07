@@ -73,6 +73,8 @@ class SimpleRemoteControl {
     var onCommands: [Command] = Array(repeating: NoCommand(), count: 7)
     var offCommands: [Command] = Array(repeating: NoCommand(), count: 7)
     
+    var undoCommand: Command?
+    
     func setCommand(slot: Int, onCommand: Command, offCommand: Command) {
         self.onCommands[slot] = onCommand
         self.offCommands[slot] = offCommand
@@ -80,9 +82,19 @@ class SimpleRemoteControl {
     
     func onButtonWasPressed(at slot: Int) {
         self.onCommands[slot].excute()
+        
+        /// On 记下 Off 状态
+        self.undoCommand = self.offCommands[slot]
     }
     
     func offButtonWasPressed(at slot: Int) {
         self.offCommands[slot].excute()
+        
+        /// Off 记下 On 状态
+        self.undoCommand = self.onCommands[slot]
+    }
+    
+    func undoButtonWasPressed() {
+        self.undoCommand?.excute()
     }
 }
