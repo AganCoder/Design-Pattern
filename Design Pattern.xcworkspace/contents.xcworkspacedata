@@ -16,4 +16,7 @@
    <FileRef
       location = "group:06-Command/06-Command.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:07-Adpater/07-Adpater.xcodeproj">
+   </FileRef>
 </Workspace>
